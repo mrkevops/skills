@@ -1,22 +1,22 @@
 # skills
 
-Colección de skills de Claude Code de **kevops**. Cada skill vive en su propio subdirectorio y se
-instala individualmente:
+A collection of Claude Code skills by **kevops**. Each skill lives in its own subdirectory and can be
+installed individually:
 
 ```bash
-npx skills add mrkevops/skills@<nombre-skill>
+npx skills add mrkevops/skills@<skill-name>
 ```
 
-## Catálogo
+## Catalog
 
-| Skill | Descripción |
+| Skill | Description |
 |---|---|
-| [`php-engine-cve-check`](php-engine-cve-check/SKILL.md) | Detecta CVEs del engine/intérprete de PHP (que Trivy y `composer audit` no ven) comparando la versión contra una tabla de advisories de `php-src`. |
+| [`php-engine-cve-check`](php-engine-cve-check/SKILL.md) | Detects PHP engine/interpreter-core CVEs (which Trivy and `composer audit` miss) by comparing the PHP version against a table of `php-src` advisories. |
 
-## Contribuir
+## Contributing
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) (how to collaborate).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to collaborate.
 
-## Licencia
+## License
 
 [MIT](LICENSE)
