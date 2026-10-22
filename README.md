@@ -13,6 +13,10 @@ npx skills add mrkevops/skills@<nombre-skill>
 |---|---|
 | [`php-engine-cve-check`](php-engine-cve-check/SKILL.md) | Detecta CVEs del engine/intérprete de PHP (que Trivy y `composer audit` no ven) comparando la versión contra una tabla de advisories de `php-src`. |
 
+## Contribuir
+
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) (how to collaborate).
+
 ## Licencia
 
 [MIT](LICENSE)
