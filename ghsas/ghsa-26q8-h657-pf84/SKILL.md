@@ -35,7 +35,8 @@ Both fixed in **Bun 1.4.4**.
   time. A patched `bun` on the host building them does not help an already-built, unrebuilt
   executable — it must be rebuilt.
 - There is no public SHA-256/serial list for the 8 compromised eMudhra intermediates (see the
-  `emudhra-tls-security` skill for the broader incident and its citations). This skill cannot
+  [`emudhra-tls-security`](../../incidents/emudhra-tls-security/SKILL.md) skill for the broader
+  incident and its citations). This skill cannot
   confirm a specific certificate is one of the 8 — only that Bun's bundled trust store, below
   1.4.4, would have accepted any of them.
 

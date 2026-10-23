@@ -22,10 +22,17 @@ directory and is installable as `mrkevops/skills@<skill-name>`.
 
 A skill is any directory containing a `SKILL.md`. A skill tied to one or more CVEs is grouped
 under `cves/cve-<id>/`; one tied to an advisory with no CVE ID (a GHSA-only advisory) is grouped
-under `ghsas/ghsa-<id>/` instead, following the exact same convention. A skill tied to neither —
-an incident with no single advisory ID, like a CA key compromise — stays top-level. Either way,
-the grouping folder itself (`cves/`, `ghsas/`) has no `SKILL.md` and is never an installable
-unit; it's purely a browsing/template convention.
+under `ghsas/ghsa-<id>/` instead; one tied to neither — an incident with no single advisory ID,
+like a CA key compromise — goes under `incidents/<name>/`. None of these grouping folders
+(`cves/`, `ghsas/`, `incidents/`) has a `SKILL.md` of its own, and none is ever an installable
+unit; they're purely a browsing/template convention.
+
+**Never add a skill directly at the repo root once any grouped skill exists.** `npx skills add`
+stops descending into subdirectories as soon as it finds a skill at a shallower depth than the
+deepest existing skill, so one top-level skill would silently hide every `cves/`/`ghsas/`/
+`incidents/` skill from the default `--list`, `--all`, and even an exact `@name` install.
+Verify this with `--full-depth` on the actual repo before merging if you're ever unsure — don't
+assume the default (shallow) scan sees everything.
 
 When several CVEs share the same fixed-version table and detection engine (e.g. a batch of bugs
 fixed together in one language runtime's security release), they belong in **one** skill
@@ -63,15 +70,17 @@ Guidelines:
 - Security skills are **defensive only**: detection and remediation guidance, never exploitation.
 - Add the skill to the catalog table in `README.md`.
 
-## Adding a new CVE/GHSA-detection skill
+## Adding a new CVE/GHSA/incident-detection skill
 
-`cves/cve-<id>/` and `ghsas/ghsa-<id>/` skills are self-contained — no shared code outside the
-directory, so each installs independently. To add one:
+`cves/cve-<id>/`, `ghsas/ghsa-<id>/` and `incidents/<name>/` skills are self-contained — no
+shared code outside the directory, so each installs independently. To add one:
 
 1. Copy an existing directory of the same kind (e.g. `cves/cve-2026-109618/` for a version-only
    PHP-style check, `cves/cve-2026-111943/` for a multi-source toolchain check with contextual
-   TLS inspection, `ghsas/ghsa-26q8-h657-pf84/` for a GHSA with no CVE) to
-   `cves/cve-<year>-<id>/` or `ghsas/ghsa-<id>/`.
+   TLS inspection, `ghsas/ghsa-26q8-h657-pf84/` for a GHSA with no CVE,
+   `incidents/emudhra-tls-security/` for an incident with no advisory ID at all, checking
+   artifacts — certificates here — instead of a version) to `cves/cve-<year>-<id>/`,
+   `ghsas/ghsa-<id>/` or `incidents/<name>/`.
 2. Replace `data.json` (advisory, CVSS/severity, fixed versions, and whatever detection
    parameters the engine needs — e.g. `version_source`, `usage_hints`, `always_vulnerable_branches`).
    Verify every field against the GHSA/NVD entry and the vendor advisory before adding it — there

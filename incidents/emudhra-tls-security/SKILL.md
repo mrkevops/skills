@@ -11,8 +11,8 @@ root `emSign ECC Root CA - G3` had their private keys compromised. Full incident
 and citations live in [data.json](data.json).
 
 **This incident has no single universal CVE.** It produced ecosystem-specific advisories
-instead — [CVE-2026-111943 / GO-2026-6809](../cves/cve-2026-111943/SKILL.md) for Go and
-[GHSA-26q8-h657-pf84](../ghsas/ghsa-26q8-h657-pf84/SKILL.md) for Bun. This skill checks the
+instead — [CVE-2026-111943 / GO-2026-6809](../../cves/cve-2026-111943/SKILL.md) for Go and
+[GHSA-26q8-h657-pf84](../../ghsas/ghsa-26q8-h657-pf84/SKILL.md) for Bun. This skill checks the
 incident itself (certificates, chains, trust stores), independent of any one runtime — use it
 alongside those two when the stack includes Go or Bun.
 

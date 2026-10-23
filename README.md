@@ -28,13 +28,22 @@ them exploit, probe destructively, or scan unnamed/unauthorized targets. See eac
 | [`cve-2026-111943`](cves/cve-2026-111943/SKILL.md) | Checks for CVE-2026-111943 / GO-2026-6809: Go's `crypto/x509` trusting compromised eMudhra intermediate CAs, across go.mod, Dockerfiles, CI, running toolchains and compiled binaries. |
 | [`cve-2026-105481`](cves/cve-2026-105481/SKILL.md) | Checks a Node.js project/container against all 10 CVEs fixed in the October 2026 Node.js security releases (named after the lowest CVE ID in that batch — see its `SKILL.md`). |
 | [`ghsa-26q8-h657-pf84`](ghsas/ghsa-26q8-h657-pf84/SKILL.md) | Checks a Bun project/container against GHSA-26q8-h657-pf84 (bundled trust store accepting compromised eMudhra CAs) and CVE-2026-111497 (Brotli decoder RCE), both fixed in Bun 1.4.4. |
-| [`emudhra-tls-security`](emudhra-tls-security/SKILL.md) | Checks certificates, chains, trust stores or an authorized HTTPS endpoint against the eMudhra emSign intermediate CA key-compromise incident directly (no single CVE covers it). |
+| [`emudhra-tls-security`](incidents/emudhra-tls-security/SKILL.md) | Checks certificates, chains, trust stores or an authorized HTTPS endpoint against the eMudhra emSign intermediate CA key-compromise incident directly (no single CVE covers it). |
 
 `cves/` groups CVE-specific detection skills (`cves/cve-<id>/`); `ghsas/` groups the same for
-advisories with no CVE ID (`ghsas/ghsa-<id>/`). Neither folder has a `SKILL.md` of its own, so
-neither installs as a bundle by name — they're folder conventions for browsing and for copying
-a template when adding a new one (see [CONTRIBUTING.md](CONTRIBUTING.md)). Use `--all` above to
-install every skill the repo currently has.
+advisories with no CVE ID (`ghsas/ghsa-<id>/`); `incidents/` groups skills for an incident with
+no single advisory ID at all (`incidents/<name>/`). None of these folders has a `SKILL.md` of
+its own, so none installs as a bundle by name — they're folder conventions for browsing and for
+copying a template when adding a new one (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+
+**Every skill must live at the same depth (one directory inside its grouping folder, or
+top-level if ungrouped) — never a mix.** The installer (`npx skills add`) stops descending into
+subdirectories once it finds a skill shallower than that depth elsewhere in the repo, so a
+top-level skill alongside grouped ones would silently hide every grouped skill from the default
+`--list`/`--all`/`@name` install. This is why `emudhra-tls-security` lives under `incidents/`
+rather than at the repo root even though it's the only thing in that folder.
+
+Use `--all` above to install every skill the repo currently has.
 
 A skill whose name is a CVE ID can still cover more than that one CVE when several share a
 fixed-version table and detection engine (see `cve-2026-105481`'s `SKILL.md` for why) — the
