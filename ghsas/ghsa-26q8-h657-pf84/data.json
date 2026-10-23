@@ -1,0 +1,37 @@
+{
+  "fixed_version": "1.4.4",
+  "last_updated": "2026-10-23",
+  "issues": [
+    {
+      "id": "GHSA-26q8-h657-pf84",
+      "cve": null,
+      "severity": "high",
+      "title": "Bundled root certificates trust compromised eMudhra (emSign) intermediate CAs",
+      "advisory": "https://github.com/oven-sh/bun/security/advisories/GHSA-26q8-h657-pf84",
+      "cwe": "CWE-295 (Improper Certificate Validation)",
+      "summary": "Bun's default trust store included the root 'emSign ECC Root CA - G3'. Eight eMudhra (emSign) intermediate CAs were revoked for key compromise (disclosed 2026-10-17/20); six issue TLS certificates chaining to that root. Bun <=1.4.3 accepts certificates from those intermediates by default, and only checks revocation against a CRL passed explicitly via the `crl` option, so the CA's own revocation has no effect by default.",
+      "applicability": "Affects any default-trust-store TLS connection: fetch(), bun install/bunx, node:https, node:tls, WebSocket, Bun.connect. --use-system-ca / NODE_USE_SYSTEM_CA=1 does not help (adds to the bundled roots, does not replace them). Executables built with `bun build --compile` embed the affected trust store and stay vulnerable until rebuilt with a fixed Bun.",
+      "fixed_in": "1.4.4 (removes the emSign G3/C1/C3 roots from the bundle, updates to NSS 3.131.1, and rejects chains containing the 8 compromised keys with CERT_REVOKED)",
+      "workaround": "Pass an explicit CA list that excludes the emSign roots: the `ca` option per connection, `--cafile` for bun install, or `cafile` in bunfig.toml.",
+      "usage_hints": ["fetch\\(", "Bun\\.connect", "node:tls", "node:https", "WebSocket", "bun install", "bunx"],
+      "related_incident": {
+        "compromised_root_common_name": "emSign ECC Root CA - G3",
+        "note": "No SHA-256 fingerprints or serial numbers for the 8 compromised intermediates were published in any source checked as of last_updated.",
+        "official_test_endpoint": "https://emudhra.we-have-a-problem.com"
+      }
+    },
+    {
+      "id": "CVE-2026-111497",
+      "cve": "CVE-2026-111497",
+      "severity": "high",
+      "title": "Brotli decoder out-of-bounds write, can lead to RCE",
+      "advisory": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+      "cwe": "CWE-787 (Out-of-bounds Write)",
+      "summary": "The same Brotli decoder out-of-bounds write fixed in Node.js 22.23.4/24.22.1/26.12.1 (CVE-2026-111497) affects Bun's own Brotli implementation.",
+      "applicability": "Applies to any code path that Brotli-decompresses attacker-influenced data: explicit Bun/zlib Brotli APIs, or implicitly via HTTP honoring Content-Encoding: br / Accept-Encoding: br.",
+      "fixed_in": "1.4.4",
+      "workaround": "None documented other than upgrading; avoid accepting attacker-controlled Brotli-encoded input on affected versions if upgrading is not immediately possible.",
+      "usage_hints": ["brotli", "Brotli", "Accept-Encoding", "Content-Encoding", "Bun\\.inflate", "zlib"]
+    }
+  ]
+}
