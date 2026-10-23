@@ -1,0 +1,35 @@
+{
+  "incident_name": "eMudhra emSign intermediate CA private key compromise",
+  "last_updated": "2026-10-23",
+  "summary": "Private keys for eight eMudhra (emSign) intermediate CA certificates were found compromised: six TLS intermediates and two code-signing intermediates, all chaining to the root 'emSign ECC Root CA - G3' and created in an April 30, 2025 key ceremony. A researcher reported it to the Chrome Root Program on 2026-10-17; Chrome shipped a CRLSet block the same day, Android/Play Services followed around 2026-10-19, and Google/Mozilla publicly disclosed on 2026-10-20. Google and Mozilla plan to remove 'emSign ECC Root CA - G3' from their root stores, effective 2026-10-27 (PDT) for devices relying on the Chrome Root Store. eMudhra states its own root CA private keys and other intermediates are not affected, and that no certificates from the compromised intermediates were logged to Certificate Transparency before the block.",
+  "no_universal_cve": "This incident has no single universal CVE. It has downstream, ecosystem-specific advisories instead: CVE-2026-111943 / GO-2026-6809 for Go's crypto/x509 (see the cves/cve-2026-111943 skill) and GHSA-26q8-h657-pf84 for Bun's bundled trust store (see the ghsas/ghsa-26q8-h657-pf84 skill). This skill checks the incident itself -- certificates and trust stores -- independent of any one runtime.",
+  "affected_root_common_name": "emSign ECC Root CA - G3",
+  "affected_intermediate_count": "8 total: 6 TLS intermediates (domain-validated, organization-validated and extended-validation) and 2 code-signing intermediates",
+  "key_ceremony_date": "2025-04-30",
+  "no_published_identifiers": "As of last_updated, no source checked (Google's blog, Cloudflare's blog, csoonline, Business Standard, Rescana, Mozilla bugzilla search) published SHA-256 fingerprints, serial numbers or SPKI hashes for the 8 specific compromised intermediates. Google's CRLSet blocks the SPKI hashes internally, but does not publish them in human-readable form. This skill can therefore only match the affected ROOT by name (or the broader 'emSign' brand as a lower-confidence signal) -- it cannot confirm a given certificate is one of the exact 8 compromised intermediates. Treat any root-name match as POTENTIALLY_AFFECTED, never as confirmed.",
+  "official_live_test": {
+    "url": "https://emudhra.we-have-a-problem.com",
+    "maintainer": "Mozilla (Dennis Jackson), cited by Cloudflare's incident blog post",
+    "note": "Tests only the verification path being exercised (e.g. a browser or curl); a background service or a different TLS client library may use a different trust store and needs its own check."
+  },
+  "timeline_utc": [
+    { "date": "2026-10-17T18:05:00Z", "event": "Chrome Root Program receives the researcher's report" },
+    { "date": "2026-10-17T19:45:00Z", "event": "Chrome ships a CRLSet update blocking the affected SPKI hashes" },
+    { "date": "2026-10-19", "event": "Android / Google Play Services receive an equivalent block via Play Services update (time approximate, per secondary reporting)" },
+    { "date": "2026-10-20", "event": "Google and Mozilla publicly disclose the incident" },
+    { "date": "2026-10-27", "event": "Planned removal of 'emSign ECC Root CA - G3' from the Chrome Root Store, reaching devices by this date (PDT)" }
+  ],
+  "sources": [
+    "https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/",
+    "https://blog.cloudflare.com/emudhra-certificate-compromise",
+    "https://www.csoonline.com/article/4238338/google-mozilla-revoke-emudhra-intermediates-after-private-key-compromise.html",
+    "https://www.itnews.com.au/news/cloudflare-warns-fixing-botched-emudhra-certs-goes-beyond-browsers-629804"
+  ],
+  "remediation": [
+    "Wait for / apply your OS, browser and language-runtime trust-store updates that remove 'emSign ECC Root CA - G3' (or pin an explicit CA list that excludes it in the meantime).",
+    "For your own server certificates (mTLS, custom origins): confirm none were issued by the affected intermediates; if so, reissue from an unaffected CA.",
+    "For outbound HTTPS clients and package managers: confirm they use an updated trust store, not a bundled/vendored one that predates the removal (see the Go and Bun skills for two concrete examples).",
+    "Restart/redeploy affected services after updating -- a fixed package on disk does not help a process that hasn't reloaded its trust store.",
+    "Never disable certificate verification to work around errors surfaced by this fix -- that removes the protection the update restores."
+  ]
+}

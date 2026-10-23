@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Fake bun binary for --local tests: prints $FAKE_BUN_VERSION for `bun --version`.
+echo -n "${FAKE_BUN_VERSION:?}"
