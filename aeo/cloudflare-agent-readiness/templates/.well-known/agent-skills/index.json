@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "site-overview",
+      "type": "skill-md",
+      "description": "What this site offers and how to find things on it.",
+      "url": "/.well-known/agent-skills/site-overview/SKILL.md",
+      "digest": "sha256:REPLACE_WITH_sha256sum_OF_THE_SERVED_SKILL.md"
+    }
+  ]
+}

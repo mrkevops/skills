@@ -1,0 +1,7 @@
+# Add to the HOMEPAGE response via the CDN (not the origin). Only advertise URLs that exist.
+# CloudFront: response headers policy -> custom header; Cloudflare: Transform Rule; Netlify: _headers
+Link: </sitemap.xml>; rel="describedby", </llms.txt>; rel="describedby"
+# If you publish an API catalog / OpenAPI:
+# Link: </.well-known/api-catalog>; rel="api-catalog"
+# Link: </openapi.json>; rel="service-desc"
+# Link: </docs>; rel="service-doc"

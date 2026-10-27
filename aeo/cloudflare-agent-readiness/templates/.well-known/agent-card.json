@@ -1,0 +1,8 @@
+{
+  "name": "Example Agent",
+  "version": "1.0.0",
+  "description": "What the agent does.",
+  "supportedInterfaces": [{ "url": "https://example.com/a2a", "protocolBinding": "JSONRPC" }],
+  "capabilities": {},
+  "skills": [{ "id": "example", "name": "Example", "description": "What this skill does." }]
+}
