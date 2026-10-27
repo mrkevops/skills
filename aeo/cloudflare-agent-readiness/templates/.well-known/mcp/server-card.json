@@ -1,0 +1,5 @@
+{
+  "serverInfo": { "name": "example-mcp", "version": "1.0.0" },
+  "endpoint": "/mcp",
+  "capabilities": { "tools": {}, "resources": {}, "prompts": {} }
+}

@@ -14,7 +14,7 @@ Install every skill in the repo at once with:
 npx skills add mrkevops/skills --all
 ```
 
-All skills here are **read-only and detection-only**: they compare versions/configurations
+All security skills here are **read-only and detection-only**: they compare versions/configurations
 against known advisories and, where safe, inspect certificates or running processes. None of
 them exploit, probe destructively, or scan unnamed/unauthorized targets. See each skill's
 `SKILL.md` for its exact hard rules.
@@ -29,10 +29,12 @@ them exploit, probe destructively, or scan unnamed/unauthorized targets. See eac
 | [`cve-2026-105481`](cves/cve-2026-105481/SKILL.md) | Checks a Node.js project/container against all 10 CVEs fixed in the October 2026 Node.js security releases (named after the lowest CVE ID in that batch — see its `SKILL.md`). |
 | [`ghsa-26q8-h657-pf84`](ghsas/ghsa-26q8-h657-pf84/SKILL.md) | Checks a Bun project/container against GHSA-26q8-h657-pf84 (bundled trust store accepting compromised eMudhra CAs) and CVE-2026-111497 (Brotli decoder RCE), both fixed in Bun 1.4.4. |
 | [`emudhra-tls-security`](incidents/emudhra-tls-security/SKILL.md) | Checks certificates, chains, trust stores or an authorized HTTPS endpoint against the eMudhra emSign intermediate CA key-compromise incident directly (no single CVE covers it). |
+| [`cloudflare-agent-readiness`](aeo/cloudflare-agent-readiness/SKILL.md) | AEO / AI-agent readiness: scans a site you own with Cloudflare's isitagentready.com scanner and consolidates its 25 implementation skills (robots.txt, sitemap, AI bot rules, Content Signals, llms.txt, markdown negotiation, Agent Skills, MCP/A2A, OAuth, commerce) into one fix workflow. Not a security-advisory check. |
 
 `cves/` groups CVE-specific detection skills (`cves/cve-<id>/`); `ghsas/` groups the same for
 advisories with no CVE ID (`ghsas/ghsa-<id>/`); `incidents/` groups skills for an incident with
-no single advisory ID at all (`incidents/<name>/`). None of these folders has a `SKILL.md` of
+no single advisory ID at all (`incidents/<name>/`); `aeo/` groups answer-engine / agent-readiness
+skills (`aeo/<name>/`). None of these folders has a `SKILL.md` of
 its own, so none installs as a bundle by name — they're folder conventions for browsing and for
 copying a template when adding a new one (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 

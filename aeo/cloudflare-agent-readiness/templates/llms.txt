@@ -1,0 +1,10 @@
+# Example Site
+
+> One sentence: what this site is and who it is for.
+
+## Pages
+- [Home](https://example.com/en/): overview
+- [About](https://example.com/en/about): who is behind the site
+
+## Optional
+- [Full content](https://example.com/llms-full.txt): expanded plain-text version

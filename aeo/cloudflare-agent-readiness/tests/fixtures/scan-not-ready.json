@@ -1,0 +1,435 @@
+{
+ "url": "https://kevops.site",
+ "targetUrl": "https://kevops.site",
+ "scannedAt": "2026-10-27T21:03:30.616Z",
+ "level": 0,
+ "levelName": "Not Ready",
+ "checks": {
+  "discoverability": {
+   "robotsTxt": {
+    "status": "fail",
+    "message": "robots.txt not found",
+    "messageRef": {
+     "code": "check.robotsTxt.notFound"
+    }
+   },
+   "sitemap": {
+    "status": "fail",
+    "message": "sitemap.xml not found",
+    "messageRef": {
+     "code": "check.sitemap.notFound"
+    }
+   },
+   "linkHeaders": {
+    "status": "fail",
+    "message": "No Link headers found on target page",
+    "messageRef": {
+     "code": "check.linkHeaders.notFound"
+    }
+   },
+   "dnsAid": {
+    "status": "fail",
+    "message": "DNS for AI Discovery (DNS-AID) well-known entrypoint records not found",
+    "messageRef": {
+     "code": "check.dnsAid.notFound"
+    },
+    "details": {
+     "domainsChecked": [
+      "kevops.site"
+     ],
+     "queriesAttempted": [
+      "SVCB _index._agents.kevops.site",
+      "HTTPS _index._agents.kevops.site",
+      "SVCB _a2a._agents.kevops.site",
+      "HTTPS _a2a._agents.kevops.site",
+      "SVCB _mcp._agents.kevops.site",
+      "HTTPS _mcp._agents.kevops.site",
+      "TXT _index._agents.kevops.site"
+     ],
+     "dnssecValidated": false,
+     "serviceRecordCount": 0,
+     "aliasRecordCount": 0,
+     "txtIndexEntryCount": 0,
+     "txtIndexEntries": [],
+     "records": []
+    }
+   }
+  },
+  "contentAccessibility": {
+   "markdownNegotiation": {
+    "status": "fail",
+    "message": "Site does not support Markdown for Agents",
+    "messageRef": {
+     "code": "check.markdownNegotiation.unsupported"
+    },
+    "details": {
+     "contentType": "text/html"
+    }
+   }
+  },
+  "botAccessControl": {
+   "robotsTxtAiRules": {
+    "status": "fail",
+    "message": "Cannot check AI rules without robots.txt",
+    "messageRef": {
+     "code": "check.aiRules.robotsTxtUnavailable"
+    },
+    "details": {
+     "targetPath": "/",
+     "robotsStatus": "notFound",
+     "botPolicies": [
+      {
+       "userAgent": "gptbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "chatgpt-user",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "oai-searchbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "google-extended",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "ccbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "anthropic-ai",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "claude-web",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "bytespider",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "perplexitybot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "cohere-ai",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "applebot-extended",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "amazonbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "meta-externalagent",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "facebookbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "omgilibot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "diffbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "claudebot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "claude-searchbot",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "claude-user",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      },
+      {
+       "userAgent": "perplexity-user",
+       "effectiveAccess": "allowed",
+       "ruleSource": "default",
+       "rules": []
+      }
+     ],
+     "checkedBots": [
+      "gptbot",
+      "chatgpt-user",
+      "oai-searchbot",
+      "google-extended",
+      "ccbot",
+      "anthropic-ai",
+      "claude-web",
+      "bytespider",
+      "perplexitybot",
+      "cohere-ai",
+      "applebot-extended",
+      "amazonbot",
+      "meta-externalagent",
+      "facebookbot",
+      "omgilibot",
+      "diffbot",
+      "claudebot",
+      "claude-searchbot",
+      "claude-user",
+      "perplexity-user"
+     ]
+    }
+   },
+   "contentSignals": {
+    "status": "fail",
+    "message": "Cannot check Content Signals without robots.txt",
+    "messageRef": {
+     "code": "check.contentSignals.robotsTxtUnavailable"
+    }
+   },
+   "webBotAuth": {
+    "status": "neutral",
+    "message": "Web Bot Auth directory not found (informational only)",
+    "messageRef": {
+     "code": "scanner.webBotAuthInformational",
+     "params": {
+      "original": {
+       "code": "check.webBotAuth.notFound"
+      }
+     }
+    }
+   }
+  },
+  "discovery": {
+   "apiCatalog": {
+    "status": "fail",
+    "message": "API Catalog not found",
+    "messageRef": {
+     "code": "check.apiCatalog.notFound"
+    }
+   },
+   "oauthDiscovery": {
+    "status": "fail",
+    "message": "No OAuth/OIDC discovery metadata found",
+    "messageRef": {
+     "code": "check.oauthDiscovery.notFound"
+    }
+   },
+   "oauthProtectedResource": {
+    "status": "fail",
+    "message": "No OAuth Protected Resource Metadata found",
+    "messageRef": {
+     "code": "check.oauthProtectedResource.notFound"
+    }
+   },
+   "authMd": {
+    "status": "fail",
+    "message": "auth.md not found",
+    "messageRef": {
+     "code": "check.authMd.notFound"
+    }
+   },
+   "mcpServerCard": {
+    "status": "fail",
+    "message": "MCP Server Card not found",
+    "messageRef": {
+     "code": "check.mcpServerCard.notFound"
+    }
+   },
+   "a2aAgentCard": {
+    "status": "fail",
+    "message": "A2A Agent Card not found",
+    "messageRef": {
+     "code": "check.a2aAgentCard.notFound"
+    }
+   },
+   "agentSkills": {
+    "status": "fail",
+    "message": "Agent Skills index not found",
+    "messageRef": {
+     "code": "check.agentSkills.notFound"
+    }
+   },
+   "webMcp": {
+    "status": "fail",
+    "message": "No WebMCP tools detected on page load",
+    "messageRef": {
+     "code": "check.webMcp.noToolsDetected"
+    }
+   },
+   "ard": {
+    "status": "fail",
+    "message": "ARD capability manifest not found",
+    "messageRef": {
+     "code": "check.ard.notFound"
+    },
+    "details": {
+     "discoveryMechanisms": [],
+     "searchEndpoints": []
+    }
+   },
+   "personalAgentProtocol": {
+    "status": "fail",
+    "message": "Personal Agent Protocol manifest not found",
+    "messageRef": {
+     "code": "check.personalAgentProtocol.notFound"
+    },
+    "details": {
+     "manifestDetected": false,
+     "issuerValidation": "notChecked"
+    }
+   }
+  },
+  "commerce": {
+   "x402": {
+    "status": "neutral",
+    "message": "x402 payment protocol not detected (not a commerce site)",
+    "messageRef": {
+     "code": "scanner.commerceCheckNotApplicable",
+     "params": {
+      "check": "x402",
+      "original": {
+       "code": "check.x402.notDetected"
+      }
+     }
+    }
+   },
+   "mpp": {
+    "status": "neutral",
+    "message": "MPP payment discovery not detected (not a commerce site)",
+    "messageRef": {
+     "code": "scanner.commerceCheckNotApplicable",
+     "params": {
+      "check": "mpp",
+      "original": {
+       "code": "check.mpp.notDetected"
+      }
+     }
+    }
+   },
+   "ucp": {
+    "status": "neutral",
+    "message": "UCP profile not found (not a commerce site)",
+    "messageRef": {
+     "code": "scanner.commerceCheckNotApplicable",
+     "params": {
+      "check": "ucp",
+      "original": {
+       "code": "check.ucp.notFound"
+      }
+     }
+    }
+   },
+   "acp": {
+    "status": "neutral",
+    "message": "ACP discovery document not found (not a commerce site)",
+    "messageRef": {
+     "code": "scanner.commerceCheckNotApplicable",
+     "params": {
+      "check": "acp",
+      "original": {
+       "code": "check.acp.notFound"
+      }
+     }
+    }
+   },
+   "ap2": {
+    "status": "neutral",
+    "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)",
+    "messageRef": {
+     "code": "scanner.commerceCheckNotApplicable",
+     "params": {
+      "check": "ap2",
+      "original": {
+       "code": "check.ap2.agentCardMissing"
+      }
+     }
+    }
+   }
+  }
+ },
+ "nextLevel": {
+  "target": 1,
+  "name": "Basic Web Presence",
+  "requirements": [
+   {
+    "check": "robotsTxt",
+    "description": "Publish /robots.txt with clear crawl rules",
+    "shortPrompt": "Create /robots.txt at the site root with explicit User-agent directives and allow/disallow rules for key paths.",
+    "specUrls": [
+     "https://www.rfc-editor.org/rfc/rfc9309"
+    ],
+    "prompt": "Create /robots.txt at the site root with explicit User-agent directives and allow/disallow rules for key paths. Ensure it is plain text and returns 200.",
+    "skillUrl": "https://isitagentready.com/.well-known/agent-skills/robots-txt/SKILL.md"
+   },
+   {
+    "check": "sitemap",
+    "description": "Publish a sitemap and reference it from robots.txt",
+    "shortPrompt": "Generate /sitemap.xml listing canonical URLs, keep it updated on publish, and reference it from /robots.txt.",
+    "specUrls": [
+     "https://www.sitemaps.org/protocol.html"
+    ],
+    "prompt": "Generate /sitemap.xml listing canonical URLs, keep it updated on publish, and reference it from /robots.txt.",
+    "skillUrl": "https://isitagentready.com/.well-known/agent-skills/sitemap/SKILL.md"
+   },
+   {
+    "check": "linkHeaders",
+    "description": "Include Link response headers for agent discovery (RFC 8288)",
+    "shortPrompt": "Add Link response headers to your homepage pointing to API docs, catalogs, or machine-readable descriptions.",
+    "specUrls": [
+     "https://www.rfc-editor.org/rfc/rfc8288",
+     "https://www.rfc-editor.org/rfc/rfc9727#section-3"
+    ],
+    "prompt": "Add Link response headers to your homepage that point agents to useful resources. For example: Link: </.well-known/api-catalog>; rel=\"api-catalog\" to advertise your API catalog, or Link: </docs/api>; rel=\"service-doc\" for API documentation. See RFC 8288 for the Link header format and IANA Link Relations for registered relation types.",
+    "skillUrl": "https://isitagentready.com/.well-known/agent-skills/link-headers/SKILL.md"
+   }
+  ]
+ },
+ "isCommerce": false,
+ "commerceSignals": [
+  "prices:multiple"
+ ]
+}

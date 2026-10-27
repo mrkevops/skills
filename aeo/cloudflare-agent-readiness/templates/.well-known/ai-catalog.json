@@ -1,0 +1,13 @@
+{
+  "specVersion": "1.0",
+  "host": { "displayName": "Example", "identifier": "did:web:example.com" },
+  "entries": [
+    {
+      "identifier": "urn:air:example.com:skill:site-overview",
+      "displayName": "Site overview",
+      "type": "text/markdown",
+      "url": "https://example.com/.well-known/agent-skills/site-overview/SKILL.md",
+      "representativeQueries": ["what does example.com offer", "who runs example.com"]
+    }
+  ]
+}

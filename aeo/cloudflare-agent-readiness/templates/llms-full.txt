@@ -1,0 +1,7 @@
+# Example Site
+
+> One sentence: what this site is and who it is for.
+
+## About
+Detailed, factual text about the site's key topics, written for LLM ingestion.
+Generate this file at build time from the same sources as the pages.

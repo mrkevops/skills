@@ -1,0 +1,30 @@
+# Replace example.com. Decide the AI-training block (GPTBot... Amazonbot) with the site owner.
+User-agent: *
+Allow: /
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+# AI search crawlers: allowing them is what lets you appear in AI answers
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+# AI training crawlers: blocking does not affect AI search visibility
+User-agent: GPTBot
+Disallow: /
+User-agent: ClaudeBot
+Disallow: /
+User-agent: Google-Extended
+Disallow: /
+User-agent: Applebot-Extended
+Disallow: /
+User-agent: CCBot
+Disallow: /
+User-agent: Bytespider
+Disallow: /
+User-agent: Amazonbot
+Disallow: /
+
+Sitemap: https://example.com/sitemap.xml
