@@ -6,7 +6,7 @@
 
 const fs = require('node:fs')
 const path = require('node:path')
-const { execSync, spawnSync } = require('node:child_process')
+const { execFileSync, spawnSync } = require('node:child_process')
 const { parseArgs } = require('node:util')
 
 const DATA = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data.json'), 'utf8'))
@@ -115,7 +115,7 @@ function readScannedText(root) {
   return text
 }
 
-function getLocalVersion() { return execSync('bun --version', { encoding: 'utf8', timeout: 10_000 }).trim() }
+function getLocalVersion() { return execFileSync('bun', ['--version'], { encoding: 'utf8', timeout: 10_000 }).trim() }
 
 function getDockerVersion(service, composeFile) {
   const args = ['compose']
@@ -133,7 +133,7 @@ function getDockerVersion(service, composeFile) {
 function inspectBinary(binaryPath) {
   if (!fs.existsSync(binaryPath)) throw new Error(`no such file: ${binaryPath}`)
   let strings
-  try { strings = execSync(`strings ${JSON.stringify(binaryPath)}`, { encoding: 'utf8', timeout: 15_000, maxBuffer: 64 * 1024 * 1024 }) }
+  try { strings = execFileSync('strings', [binaryPath], { encoding: 'utf8', timeout: 15_000, maxBuffer: 64 * 1024 * 1024 }) }
   catch (e) { throw new Error(`'strings' not available to inspect the binary: ${e.message}`) }
   const versionMatch = /Bun v(\d+\.\d+\.\d+)/.exec(strings)
   const looksLikeBun = versionMatch || /\bBun\.js\b/.test(strings) || /bun-compile-marker/.test(strings)

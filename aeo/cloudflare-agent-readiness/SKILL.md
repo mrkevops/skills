@@ -27,6 +27,8 @@ Cloudflare. If upstream changes, treat upstream as the source of truth and updat
 - **Only scan and change sites the user owns or is authorized to change.** The scan sends
   one `POST https://isitagentready.com/api/scan` with the URL — nothing else — to the
   third-party scanner, which then fetches that site's public well-known URLs.
+  Loopback, private, link-local and internal hostnames are refused (they can't be scanned from
+  the internet and would leak internal names).
 - **Never fabricate capabilities.** Publish an MCP card, A2A card, OAuth metadata, API catalog,
   commerce document, etc. only if the thing it advertises exists. A static portfolio/blog should
   not claim an API or payment flow to turn a check green.

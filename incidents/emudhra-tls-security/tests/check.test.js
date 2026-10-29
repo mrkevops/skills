@@ -9,7 +9,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 const os = require('node:os')
 const tls = require('node:tls')
-const { execFile, execSync } = require('node:child_process')
+const { execFile, execFileSync } = require('node:child_process')
 const { promisify } = require('node:util')
 const execFileAsync = promisify(execFile)
 
@@ -17,7 +17,7 @@ const HERE = __dirname
 const CHECK = path.join(HERE, '..', 'scripts', 'check.js')
 
 let haveOpenssl = true
-try { execSync('openssl version', { stdio: 'ignore' }) } catch { haveOpenssl = false }
+try { execFileSync('openssl', ['version'], { stdio: 'ignore' }) } catch { haveOpenssl = false }
 
 // Async throughout: a synchronous child-process wait would stall this process's event loop, and
 // with it the in-process TLS server the --url test uses as a fixture.
@@ -33,7 +33,7 @@ async function run(args) {
 function selfSignedCert(cn, dir, name) {
   const keyFile = path.join(dir, `${name}.key`)
   const certFile = path.join(dir, `${name}.crt`)
-  execSync(`openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout ${JSON.stringify(keyFile)} -out ${JSON.stringify(certFile)} -days 1 -nodes -subj "/CN=${cn}"`, { stdio: 'ignore' })
+  execFileSync('openssl', ['req', '-x509', '-newkey', 'ec', '-pkeyopt', 'ec_paramgen_curve:prime256v1', '-keyout', keyFile, '-out', certFile, '-days', '1', '-nodes', '-subj', `/CN=${cn}`], { stdio: 'ignore' })
   return { keyFile, certFile }
 }
 

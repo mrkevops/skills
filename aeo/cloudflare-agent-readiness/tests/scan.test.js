@@ -85,3 +85,11 @@ test('templates: JSON files parse and robots.txt/sitemap keep their required dir
   assert.match(fs.readFileSync(path.join(dir, 'sitemap.xml'), 'utf8'), /<urlset[^>]+sitemaps\.org/)
   assert.match(fs.readFileSync(path.join(dir, 'llms.txt'), 'utf8'), /^# /)
 })
+
+test('refuses loopback, private and internal targets without contacting the scanner', async () => {
+  for (const target of ['http://localhost/', 'http://127.0.0.1/', 'http://169.254.169.254/', 'http://10.1.2.3/', 'http://[::1]/', 'http://intranet/', 'https://app.internal/']) {
+    const result = await run([target])
+    assert.equal(result.code, 2, target)
+    assert.match(result.stderr, /non-public host/)
+  }
+})
