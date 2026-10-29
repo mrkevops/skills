@@ -45,9 +45,10 @@ is the root's name, `emSign ECC Root CA - G3`. So:
 2. Report per certificate found: `POTENTIALLY_AFFECTED` (matches the affected root exactly) /
    `INSUFFICIENT_EVIDENCE` (mentions "emSign" but isn't an exact match — tell the user to verify
    manually) / `NOT_AFFECTED` (scoped to *that* certificate only — never a system-wide claim).
-3. `--url` performs a plain TLS handshake with certificate validation disabled, purely to read
-   what the server presents — it does not tell you whether the user's actual TLS client (with
-   validation enabled) would accept or reject that chain. Say so.
+3. `--url` validates the chain against this machine's trust store by default (`tls_validated` in
+   the report). If the handshake fails validation, the script says so; only then, and only if the
+   user agrees, re-run with `--no-verify` to read the presented chain without validating it. Say
+   which mode was used: neither tells you what the user's actual client would do.
 4. Always distinguish "this chain includes the implicated root" from "this system has been
    compromised" — the former is what this skill can show; the latter requires evidence this
    skill does not and cannot collect (no probing, no forged certs, nothing destructive).
@@ -63,7 +64,7 @@ Requires Node.js 18+ (uses `crypto.X509Certificate` and `tls.connect`); no other
 ## Hard rules
 
 - **Read-only, and only on what the user names.** `--pem`/`--store` read a local file the user
-  points to. `--url` performs a single plain TLS handshake to a host **the user explicitly
+  points to. `--url` performs a single TLS handshake to a host **the user explicitly
   names** — never scans a range, a list of unnamed targets, or anything inferred.
 - **No private keys, tokens or credentials are requested or collected.** Only the server's own
   public certificate chain is read.
