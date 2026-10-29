@@ -7,6 +7,7 @@
 'use strict'
 
 const fs = require('node:fs')
+const net = require('node:net')
 const { parseArgs } = require('node:util')
 
 const API = 'https://isitagentready.com/api/scan'
@@ -113,6 +114,16 @@ function render(result) {
   return lines.join('\n')
 }
 
+// The target is only forwarded to the public scanner, never fetched here, but a private or internal
+// host can't be scanned from the internet and would leak internal hostnames to a third party.
+function assertPublicTarget(hostname) {
+  const host = hostname.replace(/^\[|\]$/g, '').toLowerCase()
+  const internalName = host === 'localhost' || /\.(localhost|local|internal|lan|home|corp)$/.test(host) || !host.includes('.') && !net.isIP(host)
+  const v4 = net.isIPv4(host) && /^(0|10|127)\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^192\.168\.|^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(host)
+  const v6 = net.isIPv6(host) && (host === '::' || host === '::1' || /^f[cd]|^fe[89ab]|^::ffff:/.test(host))
+  if (internalName || v4 || v6) throw new Error(`refusing to scan non-public host ${host}`)
+}
+
 async function fetchScan(url, timeoutSeconds) {
   const response = await fetch(API, {
     method: 'POST',
@@ -159,6 +170,7 @@ async function main(argv) {
         console.error(USAGE)
         return 2
       }
+      assertPublicTarget(url.hostname)
       scan = await fetchScan(url.origin, timeout)
     }
     if (!scan || typeof scan.checks !== 'object') throw new Error('response has no "checks"')
