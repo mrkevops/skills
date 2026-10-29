@@ -23,8 +23,8 @@ directory and is installable as `mrkevops/skills@<skill-name>`.
 A skill is any directory containing a `SKILL.md`. A skill tied to one or more CVEs is grouped
 under `cves/cve-<id>/`; one tied to an advisory with no CVE ID (a GHSA-only advisory) is grouped
 under `ghsas/ghsa-<id>/` instead; one tied to neither — an incident with no single advisory ID,
-like a CA key compromise — goes under `incidents/<name>/`; non-security AEO/agent-readiness skills go under `aeo/<name>/`. None of these grouping folders
-(`cves/`, `ghsas/`, `incidents/`, `aeo/`) has a `SKILL.md` of its own, and none is ever an installable
+like a CA key compromise — goes under `incidents/<name>/`; non-security AEO/agent-readiness skills go under `aeo/<name>/`; web-analytics install skills go under `analytics/<name>/`. None of these grouping folders
+(`cves/`, `ghsas/`, `incidents/`, `aeo/`, `analytics/`) has a `SKILL.md` of its own, and none is ever an installable
 unit; they're purely a browsing/template convention.
 
 **Never add a skill directly at the repo root once any grouped skill exists.** `npx skills add`

@@ -30,11 +30,12 @@ them exploit, probe destructively, or scan unnamed/unauthorized targets. See eac
 | [`ghsa-26q8-h657-pf84`](ghsas/ghsa-26q8-h657-pf84/SKILL.md) | Checks a Bun project/container against GHSA-26q8-h657-pf84 (bundled trust store accepting compromised eMudhra CAs) and CVE-2026-111497 (Brotli decoder RCE), both fixed in Bun 1.4.4. |
 | [`emudhra-tls-security`](incidents/emudhra-tls-security/SKILL.md) | Checks certificates, chains, trust stores or an authorized HTTPS endpoint against the eMudhra emSign intermediate CA key-compromise incident directly (no single CVE covers it). |
 | [`cloudflare-agent-readiness`](aeo/cloudflare-agent-readiness/SKILL.md) | AEO / AI-agent readiness: scans a site you own with Cloudflare's isitagentready.com scanner and consolidates its 25 implementation skills (robots.txt, sitemap, AI bot rules, Content Signals, llms.txt, markdown negotiation, Agent Skills, MCP/A2A, OAuth, commerce) into one fix workflow. Not a security-advisory check. |
+| [`clarity-install`](analytics/clarity-install/SKILL.md) | Installs Microsoft Clarity (`@microsoft/clarity`) in a project you own: detects the framework/package manager, installs the package and wires a single client-side `Clarity.init` with the project ID from an env var (Next.js, React/Vite, Vue, Nuxt, SvelteKit, Astro, Angular, Remix, static HTML), plus consent guidance. Not a security-advisory check. |
 
 `cves/` groups CVE-specific detection skills (`cves/cve-<id>/`); `ghsas/` groups the same for
 advisories with no CVE ID (`ghsas/ghsa-<id>/`); `incidents/` groups skills for an incident with
 no single advisory ID at all (`incidents/<name>/`); `aeo/` groups answer-engine / agent-readiness
-skills (`aeo/<name>/`). None of these folders has a `SKILL.md` of
+skills (`aeo/<name>/`); `analytics/` groups web-analytics install skills (`analytics/<name>/`). None of these folders has a `SKILL.md` of
 its own, so none installs as a bundle by name — they're folder conventions for browsing and for
 copying a template when adding a new one (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 
