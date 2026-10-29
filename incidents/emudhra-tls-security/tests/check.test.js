@@ -117,7 +117,11 @@ test('--url inspects the chain presented by a local TLS server', { skip: !haveOp
   const port = server.address().port
   t.after(() => { server.close(); fs.rmSync(dir, { recursive: true, force: true }) })
 
-  const { code, out } = await run(['--url', `127.0.0.1:${port}`])
+  const strict = await run(['--url', `127.0.0.1:${port}`])
+  assert.equal(strict.code, 2)
+  assert.match(strict.out, /--no-verify/)
+
+  const { code, out } = await run(['--url', `127.0.0.1:${port}`, '--no-verify'])
   assert.equal(code, 1)
   assert.match(out, /POTENTIALLY_AFFECTED/)
 })

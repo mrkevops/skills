@@ -19,8 +19,9 @@ const AFFECTED_ROOT = DATA.affected_root_common_name // "emSign ECC Root CA - G3
 const USAGE = `Usage: check.js <mode> [options] [--json]
   --pem <file>           inspect one or more PEM certificates in a file (a chain or bundle)
   --url <host[:port]>    TLS-connect to a host the caller explicitly names and inspect the chain
-                         it presents (plain handshake, read-only; default port 443)
+                         it presents (read-only handshake, certificate validated by default; port 443)
     --timeout <seconds>  connection timeout, default 10, max 60
+    --no-verify          read the chain even if it fails validation (self-signed, untrusted root)
   --store <file>         scan a CA bundle/trust-store PEM file for the affected root/brand
   --json                 machine-readable output
 
@@ -79,7 +80,16 @@ function inspectStoreFile(file) {
   return inspectPemFile(file) // same mechanics; kept as a separate mode for a clearer report label
 }
 
-async function inspectUrl(address, timeoutSeconds) {
+// TLS validation is on by default. Reading the chain of a server whose certificate does not
+// validate (self-signed, expired, untrusted root) needs an explicit --no-verify; the connection
+// then only reads what the server presents and sends no application data.
+function certErrorHint(error) {
+  return /CERT|SELF_SIGNED|UNABLE_TO_(GET|VERIFY)|DEPTH_ZERO|HOSTNAME_MISMATCH|ERR_TLS_CERT/i.test(`${error.code} ${error.message}`)
+    ? new Error(`${error.message} (certificate did not validate; re-run with --no-verify to read the presented chain anyway)`)
+    : error
+}
+
+async function inspectUrl(address, timeoutSeconds, noVerify) {
   const hasScheme = /^[a-z]+:\/\//i.test(address)
   const url = new URL(hasScheme ? address : `https://${address}`)
   const port = Number(url.port) || 443
@@ -87,7 +97,7 @@ async function inspectUrl(address, timeoutSeconds) {
   return new Promise((resolve, reject) => {
     const socket = tls.connect({
       host: url.hostname, port, ...(isIpLiteral ? {} : { servername: url.hostname }),
-      rejectUnauthorized: false, // inspection only: we read whatever chain the server presents, we don't validate it
+      rejectUnauthorized: !noVerify,
       timeout: timeoutSeconds * 1000,
     }, () => {
       const chain = []
@@ -107,9 +117,9 @@ async function inspectUrl(address, timeoutSeconds) {
         cert = cert.issuerCertificate === cert ? null : cert.issuerCertificate
       }
       socket.end()
-      resolve(chain)
+      resolve(chain.map((c) => ({ ...c, tls_validated: !noVerify && socket.authorized })))
     })
-    socket.on('error', reject)
+    socket.on('error', (error) => reject(certErrorHint(error)))
     socket.on('timeout', () => { socket.destroy(); reject(new Error('TLS connection timed out')) })
   })
 }
@@ -126,6 +136,7 @@ async function main() {
         url: { type: 'string' },
         store: { type: 'string' },
         timeout: { type: 'string', default: '10' },
+        'no-verify': { type: 'boolean' },
         json: { type: 'boolean' },
         help: { type: 'boolean', short: 'h' },
       },
@@ -151,7 +162,7 @@ async function main() {
   try {
     if (values.pem !== undefined) certs = inspectPemFile(values.pem)
     else if (values.store !== undefined) certs = inspectStoreFile(values.store)
-    else certs = await inspectUrl(values.url, timeout)
+    else certs = await inspectUrl(values.url, timeout, values['no-verify'])
   } catch (error) {
     console.error(`error: ${error.message}`)
     process.exitCode = 2
@@ -168,7 +179,9 @@ async function main() {
       limitations: [
         DATA.no_published_identifiers,
         'A root-name match means the certificate chains through the affected root; it does not confirm the specific certificate is one of the 8 compromised intermediates, since no fingerprint/serial list for those 8 is public.',
-        '--url performs a plain TLS handshake with certificate validation disabled, purely to read what the server presents; it does not tell you whether your own TLS client (with validation enabled) would accept or reject that chain.',
+        values['no-verify']
+          ? '--no-verify was used: certificate validation was disabled to read what the server presents, so this does not tell you whether your own TLS client would accept or reject that chain.'
+          : '--url validates the chain against this machine\'s trust store (tls_validated); a chain that validates here may still be rejected, or accepted, by a different client or trust store.',
         'NOT_AFFECTED is scoped to the certificate(s) actually examined -- it is not a system-wide or trust-store-wide claim.',
         `For a live, officially maintained check: ${DATA.official_live_test.url} (${DATA.official_live_test.note})`,
       ],
